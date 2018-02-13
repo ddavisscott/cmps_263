@@ -1,0 +1,28 @@
+body{
+    background-color: white;
+    padding: 30px;
+}
+
+p{
+    text-indent: 40px;
+}
+
+//Add .axis path and .axis line commands as described in the book (1 point)
+
+
+.axis text{
+    font: Times;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+.axis path{
+    stroke:teal;
+}
+
+.axis line{
+    stroke: teal;
+}
+
+
