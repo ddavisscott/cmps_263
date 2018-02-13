@@ -77,12 +77,12 @@ d3.csv("BRICSdata.csv", function(error, data) {
       .style("text-anchor", "end")
         .style("font-size",15)
       .text("YEAR");
-  var city = svg.selectAll(".city")
+  var country = svg.selectAll(".country")
       .data(cities)
     .enter().append("g")
-      .attr("class", "city");
+      .attr("class", "country");
 
-  var path = city.append("path")
+  var path = country.append("path")
       .attr("class", "line")
       .attr("d", function(d) { return line(d.values); })
       .style("stroke", function(d) { return color(d.name); })
@@ -95,16 +95,26 @@ d3.csv("BRICSdata.csv", function(error, data) {
       .attr("stroke-dashoffset", totalLength)
       .transition()
         .duration(2000)
-        //.ease("linear")
+        //.ease(d3.easeElastic,10)
+        //.ease(d3.easeElastic,0)
+        .ease(d3.easeBounce,1)
+        //.ease(d3.easeLinear,2)
+        //.ease(d3.easeSin,3)
+        //.ease(d3.easeQuad,4)
+        //.ease(d3.easeCubic,5)
+        //.ease(d3.easePoly,6)
+        //.ease(d3.easeCircle,7)
+        //.ease(d3.easeExp,8)
+        //.ease(d3.easeBack,9)
         .attr("stroke-dashoffset", 0);
 
-  city.append("text")
+  country.append("text")
       .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
       .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.temperature) + ")"; })
       .attr("x", 3)
       .attr("dy", ".35em")
       .text(function(d) { return d.name; });
-city.append("text")
+country.append("text")
             .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
             .attr("transform", "translate("+ (-40 ) +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
             .text("million BTU's Per Person ");
