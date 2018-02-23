@@ -9,13 +9,14 @@ var parseDate = d3.timeParse("%Y%m%d");
 
 var x = d3.scaleTime().range([0, width]);
 var y = d3.scaleLinear().range([height, 0]);
-
+//picks 10 colors
 var color = d3.scaleOrdinal(d3.schemeCategory10);
 
 
 
 var line = d3.line()
     .curve(d3.curveBasis)
+    //.curve(d3.curveLinear)
     .x(function(d) { return x(d.date); })
     .y(function(d) { return y(d.temperature); });
 
@@ -93,6 +94,7 @@ d3.csv("BRICSdata.csv", function(error, data) {
     path
       .attr("stroke-dasharray", totalLength + " " + totalLength)
       .attr("stroke-dashoffset", totalLength)
+    //animation
       .transition()
         .duration(2000)
         //.ease("linear")
