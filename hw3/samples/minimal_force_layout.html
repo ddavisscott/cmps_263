@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+  <title>Force layout</title>
+</head>
+
+<style>
+circle {
+  fill: cadetblue;
+}
+</style>
+
+<body>
+  <div id="content">
+    <svg width="300" height="300">
+    </svg>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
+  <script>
+var width = 300, height = 300
+var nodes = [{}, {}, {}, {}, {}]
+
+//create an array of objects
+//call forceSimulation, passing in the array of objects
+//add one or more force functions (e.g. forceManyBody, //forceCenter, forceCollide) to the system
+//set up a callback function to update the element //positions after each tick
+
+var simulation = d3.forceSimulation(nodes)
+//forceManyBody() makes the elements repel each    
+.force('charge', d3.forceManyBody().strength(-20))
+//.force('charge', d3.forceManyBody().strength(10))
+//attracts the elements towards a centre point
+  //.force('center', d3.forceCenter(width / 2, height / 2))
+.force('center', d3.forceCenter(width/3, height/3))
+  .on('tick', ticked);
+    console.log(nodes);
+      
+//Each time the simulation iterates the function ticked 
+//will be called. This function joins the nodes array
+//to circle elements and updates their positions
+function ticked() {
+  var u = d3.select('svg')
+    .selectAll('circle')
+    .data(nodes)
+
+  u.enter()
+    .append('circle')
+    .attr('r', 5)
+    .merge(u)
+    .attr('cx', function(d) {
+      return d.x
+    })
+    .attr('cy', function(d) {
+      return d.y
+    })
+
+  u.exit().remove()
+}
+  </script>
+</body>
+</html>
