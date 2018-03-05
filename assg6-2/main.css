@@ -1,0 +1,27 @@
+
+
+svg{
+    margin-left: 100px;
+}
+
+
+.buttonBar{
+    width: 100%;
+    margin-left: 50px;
+    margin-top: 50px;
+}
+
+.title{
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 3.4em;
+    margin-top: 50px;
+}
+
+.credit{
+    
+    font-family: sans-serif;
+    font-size: 2em;
+    margin-left: 50px;
+    margin-bottom:100px;
+}
