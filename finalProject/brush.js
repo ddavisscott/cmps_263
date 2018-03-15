@@ -6,7 +6,7 @@ var prevHoursData = {
 var data_set = {
     readings: []
 };
-var dataType = "temperature";
+var datatype = "temperature";
 var request_complete = false;
 //var data = [];
 var nodeId = 1;
@@ -15,6 +15,7 @@ var hash_table = [];
 /* http request builder */
 var xhr = new XMLHttpRequest();
 //get_readings_prev_hours();
+var yLabel = "Temperature in C";
 
 
 /* testing git push */
@@ -107,12 +108,26 @@ function plotGraph() {
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis);
-
-  focus.append("g")
+  focus.append("text")             
+      .attr("transform",
+            "translate(" + (width/2) + " ," + 
+                           (height + margin.top + 15) + ")")
+      .style("text-anchor", "middle")
+      .text("Date");
+  
+    focus.append("g")
       .attr("class", "axis axis--y")
       .call(yAxis);
-
-  context.append("path")
+    // text label for the y axis
+    focus.append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 0 - margin.left - 5 )
+          .attr("x",0 - (height / 2) )
+          .attr("dy", "1em")
+          .style("text-anchor", "middle")
+          .text(yLabel);        
+  
+    context.append("path")
       .datum(data)
       .attr("class", "area")
       .attr("d", area2);
@@ -152,7 +167,9 @@ function get_readings_prev_hours() {
 function onrequestCompletion() {
     console.log("Hello world");
     var response = JSON.parse(xhr.responseText);
+    console.log(response);
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct','Nov','Dec'];
+    prevHoursData.readings = [];
     for (var i=0; i<response.length; i++) {
         date = new Date(response[i].updatedAt);
         prevHoursData.readings.push({
@@ -161,12 +178,14 @@ function onrequestCompletion() {
             "humidity" : response[i].humidity,
             "temperature" : response[i].temperature,
             "battery" : response[i].battery,
+            "moisture" : response[i].moisture,
+            "sunglight" : response[i].sunglight,
             "date" :  months[date.getMonth()] + " " + date.getFullYear().toString()  
         });
     } // for loop
     console.log(prevHoursData);
     request_complete = true;
-    buildTable(dataType);
+    buildTable();
     data = data_set.readings;
     plotGraph();
 }
@@ -192,12 +211,14 @@ function zoomed() {
   context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
 }
 
-function buildTable(datatype) {
-    console.log(prevHoursData.readings.length);
+function buildTable() {
+    console.log(datatype);
+    hash_table = [];
     for (var i=0; i<prevHoursData.readings.length; i++) {
         if(datatype == "temperature") {
             hash_table[prevHoursData.readings[i].date] =  prevHoursData.readings[i].temperature;
         } else if(datatype == "humidity") {
+            console.log("Humdity");
             hash_table[prevHoursData.readings[i].date] =  prevHoursData.readings[i].humidity;
         } else if(datatype == "battery") {
             hash_table[prevHoursData.readings[i].date] =  prevHoursData.readings[i].battery;
@@ -207,6 +228,7 @@ function buildTable(datatype) {
             hash_table[prevHoursData.readings[i].date] =  prevHoursData.readings[i].sunlight;
         } 
     }
+    data_set.readings = [];
     for(var key in hash_table ) {
       if (hash_table.hasOwnProperty(key)) {
         data_set.readings.push({
@@ -226,6 +248,13 @@ function selectNodeId() {
 
 function selectVariable() {
     datatype = document.getElementById("variable").value;
+    console.log("Value selected " + datatype);
+    if(datatype == "temperature") {
+        yLabel = "Temperature in C"
+    }
+    else {
+        yLabel = "";
+    }
     get_readings_prev_hours();
     
 }
