@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html>
 <meta charset="utf-8">
 <head>
   <title>Force layout (with links)</title>
@@ -53,7 +54,7 @@ var links = [
   {source: 4, target: 5},
   {source: 4, target: 7}
 ]
-
+console.log(nodes);
 var simulation = d3.forceSimulation(nodes)
   .force('charge', d3.forceManyBody().strength(-100))
   .force('center', d3.forceCenter(width / 2, height / 2))
@@ -67,7 +68,7 @@ function updateLinks() {
   var u = d3.select('.links')
     .selectAll('line')
     .data(links)
-
+console.log(links);
   u.enter()
     .append('line')
     .merge(u)
