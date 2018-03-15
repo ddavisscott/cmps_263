@@ -29,7 +29,8 @@ var nodes = d3.range(numNodes).map(function(d, i) {
     category: i % 3
   }
 });
-
+console.log(nodes);
+console.log(numNodes);
 var simulation = d3.forceSimulation(nodes)
   .force('charge', d3.forceManyBody().strength(5))
 
