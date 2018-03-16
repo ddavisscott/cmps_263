@@ -25,7 +25,7 @@
     <script src="d3mini.js"></script>
   </head>
   <body>
-     <div>
+    <div>
     <select id="nodeId" onchange="selectNodeId()">
         <option value="0">node 0</option>
         <option value="1">node 1</option>
@@ -41,7 +41,7 @@
         <option value="moisture">Moisture</option>
         
     </select>  
-    </div>
+    </div> 
     <div id="chart"></div>
     <div id="dataset-picker">
     </div>
@@ -217,8 +217,9 @@
 
           legend.append("text")
             .attr("class", "mono")
-            .text(function(d) { return "≥ " + Math.round(d); })
+            .text(function(d) { return "≥ " + Math.round(d);})
             .attr("x", function(d, i) { return legendElementWidth * i; })
+            .style('fill', 'purple')
             .attr("y", height + gridSize);
 
           legend.exit().remove();
@@ -239,6 +240,7 @@
         .on("click", function(d) {
           heatmapChart(d);
         });
+    
     function selectNodeId() {
         nodeId = document.getElementById("nodeId").value;
         heatmapChart("");

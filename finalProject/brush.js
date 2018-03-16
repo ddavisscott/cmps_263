@@ -26,7 +26,8 @@ var svg = d3.select("svg"),
     height = +svg.attr("height") - margin.top - margin.bottom,
     height2 = +svg.attr("height") - margin2.top - margin2.bottom;
 
-var parseDate = d3.timeParse("%b %Y");
+var parseDate = d3.timeParse("%b %d %Y");
+//var parseDate = d3.timeFormat("%b %d, %Y");
 
 var x = d3.scaleTime().range([0, width]),
     x2 = d3.scaleTime().range([0, width]),
@@ -92,7 +93,7 @@ function plotGraph() {
   console.log("New Data");
   console.log(data);
   
-  x.domain(d3.extent(data, function(d) { return parseDate(d.date); }));
+  x.domain(d3.extent(data, function(d) { console.log(parseDate(d.date)); return parseDate(d.date); }));
   y.domain([0, d3.max(data, function(d) { return +d.value; })]);
   x2.domain(x.domain());
   y2.domain(y.domain());
@@ -168,6 +169,7 @@ function onrequestCompletion() {
     console.log("Hello world");
     var response = JSON.parse(xhr.responseText);
     console.log(response);
+    //var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October','November','December'];
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct','Nov','Dec'];
     prevHoursData.readings = [];
     for (var i=0; i<response.length; i++) {
@@ -180,7 +182,8 @@ function onrequestCompletion() {
             "battery" : response[i].battery,
             "moisture" : response[i].moisture,
             "sunglight" : response[i].sunglight,
-            "date" :  months[date.getMonth()] + " " + date.getFullYear().toString()  
+            "date" :  months[date.getMonth()] + " " + date.getFullYear().toString() ,
+            "date2" : months[date.getMonth()] + " "+ date.getDay().toString() +" " + date.getFullYear().toString()
         });
     } // for loop
     console.log(prevHoursData);
@@ -216,16 +219,16 @@ function buildTable() {
     hash_table = [];
     for (var i=0; i<prevHoursData.readings.length; i++) {
         if(datatype == "temperature") {
-            hash_table[prevHoursData.readings[i].date] =  prevHoursData.readings[i].temperature;
+            hash_table[prevHoursData.readings[i].date2] =  prevHoursData.readings[i].temperature;
         } else if(datatype == "humidity") {
             console.log("Humdity");
-            hash_table[prevHoursData.readings[i].date] =  prevHoursData.readings[i].humidity;
+            hash_table[prevHoursData.readings[i].date2] =  prevHoursData.readings[i].humidity;
         } else if(datatype == "battery") {
-            hash_table[prevHoursData.readings[i].date] =  prevHoursData.readings[i].battery;
+            hash_table[prevHoursData.readings[i].date2] =  prevHoursData.readings[i].battery;
         } else if(datatype == "moisture") {
-            hash_table[prevHoursData.readings[i].date] =  prevHoursData.readings[i].moisture;
+            hash_table[prevHoursData.readings[i].date2] =  prevHoursData.readings[i].moisture;
         } else if(datatype == "sunlight") {
-            hash_table[prevHoursData.readings[i].date] =  prevHoursData.readings[i].sunlight;
+            hash_table[prevHoursData.readings[i].date2] =  prevHoursData.readings[i].sunlight;
         } 
     }
     data_set.readings = [];
