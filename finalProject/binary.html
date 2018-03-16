@@ -52,6 +52,9 @@
     var datatype = "temperature";
     var URL = "";    
     var xhr = new XMLHttpRequest();
+    var min = 10;
+    var max = 70;
+        
     var prevHoursData = {
         readings: []
     };
@@ -64,7 +67,7 @@
           colors = 
           
           
-          ["#1a9641","#fdae61","#ffffbf","#d7191c"]; 
+          ["#ffffbf","#1a9641","#fdae61","#d7191c"]; 
           //colorbrewer.YlGnBu[9],
           days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
           times = ["3a","6a", "9a", "12a",  "3p","6p","9p",  "12p"];
@@ -176,8 +179,15 @@
             data = prevHoursData.readings;
             
          console.log(data); 
-         var colorScale = d3.scale.quantile()
+        if(datatype == "battery") {
+            colors = ["#d7191c","#fdae61", "#ffffbf","#1a9641"]; 
+        } else {
+            colors = ["#ffffbf","#1a9641","#fdae61","#d7191c"]; 
+        }
+            
+        var colorScale = d3.scale.quantile()
               .domain([0, buckets - 1, d3.max(data, function (d) { return d.value; })])
+              .domain([min, max-10, max])
               .range(colors);
 
           var cards = svg.selectAll(".hour")
@@ -243,6 +253,7 @@
     
     function selectNodeId() {
         nodeId = document.getElementById("nodeId").value;
+        
         heatmapChart("");
     
     }
@@ -250,6 +261,22 @@
 
     function selectVariable() {
         datatype = document.getElementById("variable").value;
+        if(datatype == "temperature") {
+            min = 10;
+            max = 70;
+        } else if(datatype == "humidity") {
+            min = 20;
+            max = 80;
+        } else if(datatype == "moisture") {
+            min = 20;
+            max = 80;
+        }else if(datatype == "sunlight") {
+            min = 20;
+            max = 80;
+        } else if(datatype == "battery") {
+            min = 10;
+            max = 100;
+        }
         heatmapChart("");
     }
         
