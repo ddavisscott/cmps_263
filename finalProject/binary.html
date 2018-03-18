@@ -25,11 +25,40 @@
     <script src="d3mini.js"></script>
   </head>
   <body>
+    <div>
+    <select id="nodeId" onchange="selectNodeId()">
+        <option value="0">node 0</option>
+        <option value="1">node 1</option>
+        <option value="2">node 2</option>
+        <option value="3">node 3</option>
+    </select>
+    
+      <select id="variable" onchange="selectVariable()">
+        <option value="temperature">Temperature</option>
+        <option value="humidity">Humidity</option>
+        <option value="battery">Battery</option>
+        <option value="sunlight">Sunlight</option>
+        <option value="moisture">Moisture</option>
+        
+    </select>  
+    </div> 
     <div id="chart"></div>
     <div id="dataset-picker">
     </div>
+   
     <script type="text/javascript">
-      var margin = { top: 50, right: 0, bottom: 100, left: 30 },
+    var nodeId = 1;
+    var duration = 24*7;
+    var datatype = "temperature";
+    var URL = "";    
+    var xhr = new XMLHttpRequest();
+    var min = 10;
+    var max = 70;
+        
+    var prevHoursData = {
+        readings: []
+    };
+    var margin = { top: 50, right: 0, bottom: 100, left: 30 },
           width = 960 - margin.left - margin.right,
           height = 10800 - margin.top - margin.bottom,
           gridSize = Math.floor(width /8),
@@ -38,7 +67,7 @@
           colors = 
           
           
-          ["#1a9641","#fdae61","#ffffbf","#d7191c"]; 
+          ["#ffffbf","#1a9641","#fdae61","#d7191c"]; 
           //colorbrewer.YlGnBu[9],
           days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
           times = ["3a","6a", "9a", "12a",  "3p","6p","9p",  "12p"];
@@ -69,19 +98,96 @@
             .style("text-anchor", "middle")
             .attr("transform", "translate(" + gridSize / 2 + ", -6)")
             .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
-
+        
       var heatmapChart = function(tsvFile) {
-        d3.tsv(tsvFile,
-        function(d) {
-          return {
-            day: +d.day,
-            hour: +d.hour,
-            value: +d.value
-          };
-        },
-        function(error, data) {
-          var colorScale = d3.scale.quantile()
+        get_readings_prev_hours();
+        
+        function send_http_request() {
+            //console.log(URL);
+            xhr.open("GET", URL);
+            xhr.setRequestHeader('Authorization', "QRESkJWzMesUozNu6vfGJDcjKxGjzJ");
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onload = onrequestCompletion;
+            xhr.send();
+        }
+
+        function get_readings_prev_hours() {
+            URL = "http://sproutlabs-dev.herokuapp.com/api/nodes/prev_xh/" + nodeId +"?hours="+duration;
+            send_http_request();
+        }
+
+        function onrequestCompletion() {
+            var response = JSON.parse(xhr.responseText);
+            console.log(response);
+            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct','Nov','Dec'];
+            
+            var dateString = "";
+            var hour = 9;
+            var day = 0;
+            prevHoursData.readings = [];
+            for (var i=0; i<response.length; i++) {
+                date = new Date(response[i].updatedAt);
+                newDateString =  date.getDay().toString() + months[date.getMonth()] + " " + date.getFullYear().toString();
+                
+                if(newDateString != dateString) {
+                    hour = 8;
+                    day++;
+                    dateString = newDateString;
+                    if(day == 8) 
+                        break;
+                }
+                else {
+                    hour--;
+                }
+                if(datatype == "temperature") {
+                    prevHoursData.readings.push({
+                    "day": +day,
+                    "hour": +(hour),
+                    "value" : +response[i].temperature,
+                      
+                    }); 
+                } else if(datatype == "humidity"){
+                    prevHoursData.readings.push({
+                    "day": +day,
+                    "hour": +(hour),
+                    "value" : +response[i].humidity,
+                      
+                    }); 
+                } else if(datatype == "sunlight"){
+                    prevHoursData.readings.push({
+                    "day": +day,
+                    "hour": +(hour),
+                    "value" : +response[i].sunlight,
+                      
+                    }); 
+                } else if(datatype == "battery"){
+                    prevHoursData.readings.push({
+                    "day": +day,
+                    "hour": +(hour),
+                    "value" : +response[i].battery,
+                      
+                    }); 
+                } else if(datatype == "moisture"){
+                    prevHoursData.readings.push({
+                    "day": +day,
+                    "hour": +(hour),
+                    "value" : +response[i].moisture,
+                      
+                    }); 
+                }
+            } 
+            data = prevHoursData.readings;
+            
+         console.log(data); 
+        if(datatype == "battery") {
+            colors = ["#d7191c","#fdae61", "#ffffbf","#1a9641"]; 
+        } else {
+            colors = ["#ffffbf","#1a9641","#fdae61","#d7191c"]; 
+        }
+            
+        var colorScale = d3.scale.quantile()
               .domain([0, buckets - 1, d3.max(data, function (d) { return d.value; })])
+              .domain([min, max-10, max])
               .range(colors);
 
           var cards = svg.selectAll(".hour")
@@ -121,13 +227,14 @@
 
           legend.append("text")
             .attr("class", "mono")
-            .text(function(d) { return "≥ " + Math.round(d); })
+            .text(function(d) { return "≥ " + Math.round(d);})
             .attr("x", function(d, i) { return legendElementWidth * i; })
+            .style('fill', 'purple')
             .attr("y", height + gridSize);
 
           legend.exit().remove();
 
-        });  
+        }
       };
 
       heatmapChart(datasets[0]);
@@ -143,6 +250,36 @@
         .on("click", function(d) {
           heatmapChart(d);
         });
+    
+    function selectNodeId() {
+        nodeId = document.getElementById("nodeId").value;
+        
+        heatmapChart("");
+    
+    }
+
+
+    function selectVariable() {
+        datatype = document.getElementById("variable").value;
+        if(datatype == "temperature") {
+            min = 10;
+            max = 70;
+        } else if(datatype == "humidity") {
+            min = 20;
+            max = 80;
+        } else if(datatype == "moisture") {
+            min = 20;
+            max = 80;
+        }else if(datatype == "sunlight") {
+            min = 20;
+            max = 80;
+        } else if(datatype == "battery") {
+            min = 10;
+            max = 100;
+        }
+        heatmapChart("");
+    }
+        
     </script>
   </body>
 </html>
