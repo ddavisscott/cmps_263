@@ -1,0 +1,33 @@
+#row {
+    margin: auto;
+    width: 90%;
+    padding: 50px;
+}
+
+.brushing{
+    height:500px;
+    width: 960px;
+}
+
+.col1 {
+    margin: auto;
+    width: 40%;
+    padding: 50px;
+    float: left;
+}
+.col2 {
+    margin: auto;
+    width: 40%;
+    padding: 5%;
+    float: right;
+}
+
+.form-control{
+    width: 20%;
+    float: left;
+    margin-right: 20px;
+}
+
+#one_month{
+    width: %40;
+}

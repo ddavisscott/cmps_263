@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>SproutLabs Dashboard </title>
+  </head>
+  <body>
+
+     <!-- the navegation bar with menu button on the left --> 
+      <nav class="navbar navbar-light" style="background-color: #31B458;">
+          <a class="navbar-brand" href="#">SproutsLab Dashboard</a>
+          <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+              </li>
+            </ul>
+            <span class="navbar-text">
+              Navbar text with an inline element
+            </span>
+          </div>
+      </nav>
+      
+    <!-- Buble Chart -->
+      
+      <div id ="row" class ="row1">
+      
+      <h1>Network Status <span class="badge badge-secondary"></span></h1>
+      
+      <svg width= "2000"  height="1000" class ="bubble"></svg>
+          
+    </div>
+      
+      <div id = "row" class = "row2">
+          <div id = "col" class = "col1">
+              <h1>Historical Data <span class="badge badge-secondary"></span></h1>
+              
+              
+    <div id="one_month">
+   
+    
+    <select class="form-control" id="nodeId" >
+        <option value="1">node 1</option>
+        <option value="2">node 2</option>
+        <option value="3">node 3</option>
+    </select>
+    
+      <select class ="form-control" id="sensor">
+        <option value="temperature">Temperature</option>
+        <option value="humidity">Humidity</option>
+        <option value="light">Sunlight</option>
+        <option value="moisture">Moisture</option>
+          
+          
+              
+    </select>
+        
+        <button type="button" class="btn btn-outline-secondary" onclick= "refreshGraph()">Submit</button>
+      
+  </div>  
+         <div class = "brushingDiv">      
+          <svg width="800" height="500" class = "brushing" ></svg>
+        </div>     
+ </div> 
+          
+          
+    
+      
+</div>
+
+      
+      
+    
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS D3-->
+    <link rel="stylesheet" type="text/css" href="bubble.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+       <link rel="stylesheet" type="text/css" href="brush.css">
+      <script src="https://d3js.org/d3-time.v1.min.js"></script>
+<script src="https://d3js.org/d3-time-format.v2.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+      
+   <script src="brush2.js"></script>
+    <script src="bubble.js"></script>
+    
+    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>

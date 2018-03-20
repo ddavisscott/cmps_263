@@ -24,10 +24,12 @@ div.tooltip {
 }
 svg {
   border:0px solid black;
+padding: 100px;
+    background-color: antiquewhite;
 }
 </style>
 
-<svg width="1100" height="570">
+<svg width= "2000"  height="1000">
 
 </svg>
 
@@ -41,28 +43,28 @@ var svg = d3.select("svg"),
 var radius = 30; 
 var clicked= false; 
 var nodes_data =  [
-    {"name": "Router", "type": "router", "usage":31, "image": "/device-router.png"},
-    {"name": "Extender1", "type": "router", "usage":31, "image": "/device-repeater.png"},
-    {"name": "Extender2", "type": "router", "usage":31, "image": "/device-repeater.png"},
-    {"name": "Extender3", "type": "router", "usage":31, "image": "/device-repeater.png"},
-    {"name": "Extender4", "type": "router", "usage":31, "image": "/device-repeater.png"},
-    {"name": "Extender5", "type": "router", "usage":31, "image": "/device-repeater.png"},
-    {"name": "Extender6", "type": "router", "usage":31, "image": "/device-repeater.png"},
-    {"name": "Iphone1", "type": "weak", "usage":41, "image": "/device-android-phone.png"},
-    {"name": "Camera1", "type": "strong", "usage":41, "image": "/device-camera-security.png"},
-    {"name": "TV", "type": "weak", "usage":55, "image": "/device-tv.png"},
-    {"name": "Lock", "type": "offline", "usage":55, "image": "/device-lock.png"},
-    {"name": "TV2", "type": "fair", "usage":51, "image": "/device-tv.png"},
-    {"name": "Lock2", "type":"fair", "usage":31, "image": "/device-lock.png"},
-    {"name": "TV3", "type": "strong", "usage":31, "image": "/device-tv.png"},
-    {"name": "Lock3", "type":"strong", "usage":51, "image": "/device-lock.png"},
-    {"name": "Lock4", "type":"fair", "usage":31, "image": "/device-lock.png"},
-    {"name": "TV4", "type": "strong", "usage":31, "image": "/device-tv.png"},
-    {"name": "Lock5", "type":"offline", "usage":51, "image": "/device-lock.png"},
-     {"name": "TV5", "type": "strong", "usage":21, "image": "/device-tv.png"},
-    {"name": "Lock6", "type":"strong", "usage":21, "image": "/device-lock.png"},
-    {"name": "Iphone2", "type": "weak", "usage":41, "image": "/device-android-phone.png"},
-    {"name": "Camera2", "type": "offline", "usage":41, "image": "/device-camera-security.png"},
+    {"name": "Router", "type": "router", "usage":31},
+    {"name": "Extender1", "type": "router", "usage":31},
+    {"name": "Extender2", "type": "router", "usage":31},
+    {"name": "Extender3", "type": "router", "usage":31},
+    {"name": "Extender4", "type": "router", "usage":31},
+    {"name": "Extender5", "type": "router", "usage":31},
+    {"name": "Extender6", "type": "router", "usage":31},
+    {"name": "Iphone1", "type": "weak", "usage":41},
+    {"name": "Camera1", "type": "strong", "usage":41},
+    {"name": "TV", "type": "average", "usage":55},
+    {"name": "Lock", "type": "average", "usage":55},
+    {"name": "TV2", "type": "weak", "usage":51},
+    {"name": "Lock2", "type":"weak", "usage":31},
+    {"name": "TV3", "type": "strong", "usage":31},
+    {"name": "Lock3", "type":"strong", "usage":51},
+    {"name": "Lock4", "type":"average", "usage":31},
+    {"name": "TV4", "type": "strong", "usage":31},
+    {"name": "Lock5", "type":"average", "usage":51},
+     {"name": "TV5", "type": "strong", "usage":21},
+    {"name": "Lock6", "type":"strong", "usage":21},
+    {"name": "Iphone2", "type": "strong", "usage":41},
+    {"name": "Camera2", "type": "average", "usage":41}
    
    
     ]
@@ -105,15 +107,15 @@ var simulation = d3.forceSimulation()
                     
                                  
 var link_force =  d3.forceLink(links_data)
-                .distance(140)
+                .distance(240)
                 .id(function(d) { return d.name; }); 
-var charge_force = d3.forceManyBody().distanceMax(140).distanceMin(80)
+var charge_force = d3.forceManyBody().distanceMax(240).distanceMin(120)
     .strength(-1500);
  
-var attractForce = d3.forceManyBody().strength(-500); 
+var attractForce = d3.forceManyBody().strength(-300); 
 var repelForce = d3.forceManyBody().strength(500).distanceMin(520);           
     
-var center_force = d3.forceCenter(width / 2, height / 2.5);  
+var center_force = d3.forceCenter(width / 2, height / 2);  
  
  
                         
@@ -136,10 +138,12 @@ var link = svg.append("g")
     .selectAll("line")
     .data(links_data)
     .enter().append("line")
-      .attr("stroke-width", 1)
+    .attr("fill", circleColor)
+    .attr("stroke-width", 1)
       .style("stroke", linkColour)
       .style ("stroke-dasharray",linkdash);      
 //draw circles for the nodes 
+   
 var node = svg.append("g")
         .attr("class", "nodes") 
         .selectAll("circle")
@@ -147,92 +151,86 @@ var node = svg.append("g")
         .enter()
         .append("circle")
         .attr("r", nodeRadius)
+        .attr("fill", circleColor)
         .on("click", function(d) {	
-          clicked= !clicked;
-          if (clicked){
+            clicked= !clicked;
+            if (clicked){
             div.transition()		
                 .duration(0)		
                 .style("opacity", 1);		
             div.html(function(d){
-                 var data = "<div class="+"table-responsive>";
-            
-  
-            data +=   "<strong> Device Name </strong><hr>";
-            data += "<table>";
-            
-            data += "<td>Type: </td>";
-            data += "<td>Type</td>";
-  
-            data += "</tr>";
-            
-            data += "<tr>";
-            data += "<td>Manufacturer: </td>";
-            data += "<td>Manufacturer</td>";
-            data += "</tr>";
-            data += "</table>";
-            data += "</div>";
-            
-            return data;
-        })	
-                .style("left", (d3.event.pageX) + 30+ "px")		
-                .style("top", (d3.event.pageY - 28) + "px");  
-          } 
-          else{
-            div.transition()		
+                var data = "<div class="+"table-responsive>";
+                data +=   "<strong> Device Name </strong><hr>";
+                data += "<table>";
+                data += "<td>Type: </td>";
+                data += "<td>Type</td>";
+                data += "</tr>";
+                data += "<tr>";
+                data += "<td>Manufacturer: </td>";
+                data += "<td>Manufacturer</td>";
+                data += "</tr>";
+                data += "</table>";
+                data += "</div>";
+                return data;
+                })	
+        .style("left", (d3.event.pageX) + 30+ "px")		
+        .style("top", (d3.event.pageY - 28) + "px");
+            } 
+        //if not clicked
+            else{
+                div.transition()		
                 .duration(0)		
                 .style("opacity", 0)
-          }
-            })					
-        .attr("fill", function (d) {
-          return "url(#"+d.name+")";
-        })
+            }
+          });
+    
+    
         
-        
-  var defs= svg.append("defs");
-  
-  defs.append("pattern")
-    .attr("id","image")
-    .attr("height","100%")
-    .attr("width","100%")
-    .attr("x","0")
-    .attr("y","0")
-    .attr("patternContentUnits","objectBoundingBox")
-    .append("image")
-    .attr("height","1")
-    .attr("width","1")
-    .attr("x","0")
-    .attr("y","0")
-    .attr("xlink:href","./icons/device-router.png")
-defs.selectAll(".device-pattern")
-.data(nodes_data)
-.enter().append("pattern")
-.attr("id", function(d){
-  //router
-  //iphone
-  return d.name;
-})
-.attr("height","100%")
-    .attr("width","100%")
-    .attr("x","0")
-    .attr("y","0")
-    .attr("patternContentUnits","objectBoundingBox")
-    .append("image")
-    .attr("height","1")
-    .attr("width","1")
-    .attr("x","0")
-    .attr("y","0")
-    .attr("xlink:href",function(d){
-      if (d.type=="weak")
-        return "./redIcons"+d.image;
-        if (d.type=="fair")
-        return "./amberIcons"+d.image;
-        if (d.type=="strong")
-        return "./greenIcons"+d.image;
-        if (d.type=="offline")
-        return "./greyIcons"+d.image;
-        if (d.type=="router")
-        return "./greenIcons"+d.image;
-})
+//  var defs= svg.append("defs");
+//  
+//  defs.append("pattern")
+//    .attr("id","image")
+//    .attr("height","100%")
+//    .attr("width","100%")
+//    .attr("x","0")
+//    .attr("y","0")
+//    .attr("patternContentUnits","objectBoundingBox")
+//    .append("image")
+//    .attr("height","1")
+//    .attr("width","1")
+//    .attr("x","0")
+//    .attr("y","0")
+//    .attr("xlink:href","./icons/device-router.png")
+//defs.selectAll(".device-pattern")
+//.data(nodes_data)
+//.enter().append("pattern")
+//.attr("id", function(d){
+//  //router
+//  //iphone
+//  return d.name;
+//})
+//.attr("height","100%")
+//    .attr("width","100%")
+//    .attr("x","0")
+//    .attr("y","0")
+//    .attr("patternContentUnits","objectBoundingBox")
+//    .append("image")
+//    .attr("height","1")
+//    .attr("width","1")
+//    .attr("x","0")
+//    .attr("y","0")
+//    .attr("xlink:href",function(d){
+//      if (d.type=="weak")
+//        return "./redIcons"+d.image;
+//        if (d.type=="fair")
+//        return "./amberIcons"+d.image;
+//        if (d.type=="strong")
+//        return "./greenIcons"+d.image;
+//        if (d.type=="offline")
+//        return "./greyIcons"+d.image;
+//        if (d.type=="router")
+//        return "./greenIcons"+d.image;
+//})
     var usage = function(d){
   return  d.name;
 }  
@@ -241,9 +239,7 @@ defs.selectAll(".device-pattern")
 }  
     var imageURL = function(d){
   return  d.image;
-} 
-      
-      
+}
 var drag_handler = d3.drag()
 	.on("start", drag_start)
 	.on("drag", drag_drag)
@@ -251,19 +247,6 @@ var drag_handler = d3.drag()
 	
 drag_handler(node)
 /** Functions **/
-//Function to choose what color circle we have
-//Let's return blue for males and red for females
-function circleColour(d){
-	if(d.type =="strong"){
-		return "green";
-	} 
-    if(d.type =="weak"){
-		return "red";
-	}
-    else {
-		return "white";
-	}
-}
 //Function to choose the line colour and thickness 
 //If the link type is "A" return green 
 //If the link type is "E" return red 
@@ -287,10 +270,10 @@ function linkdash(d){
 }
 function nodeRadius(d){
 if(d.usage<=20){return 17;}
-if(d.usage>20 &&d.usage<=30 ){return 22;}
-if(d.usage>30 &&d.usage<=40 ){return 28;}
-if(d.usage>40 && d.usage<=50  ){return 33;}
-if(d.usage>50){return 37;}
+if(d.usage>20 &&d.usage<=30 ){return 30;}
+if(d.usage>30 &&d.usage<=40 ){return 40;}
+if(d.usage>40 && d.usage<=50  ){return 50;}
+if(d.usage>50){return 60;}
 if(d.type== "router"){return 25;}
 }
 //drag handler
@@ -304,11 +287,34 @@ function drag_drag(d) {
   d.fx = d3.event.x;
   d.fy = d3.event.y;
 }
+// pick color according to value   
+function circleColor(d){
+	if(d.type =="strong"){
+		return "green";
+	} 
+    if(d.type =="average"){
+		return "orange";
+	}
+    if(d.type =="weak"){
+		return "red";
+	}
+    if (d.type== "router"){
+        return "black";
+    }
+    else {
+		return "grey";
+	}
+}    
+
 function drag_end(d) {
   if (!d3.event.active) simulation.alphaTarget(0);  
   d.fx = null;
   d.fy = null;
 }
+    
+    function consoleTest(){
+        console.log("test");
+    }
       
 function tickActions() {
     //bounding box around the outside 

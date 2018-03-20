@@ -1,33 +1,81 @@
-var duration = 24*30*12;
-var prev_duration = duration;
-var prevHoursData = {
-    readings: []
-};
-var data_set = {
-    readings: []
-};
-var datatype = "temperature";
-var request_complete = false;
-//var data = [];
-var nodeId = 1;
-var URL = "";
-var hash_table = [];
-/* http request builder */
-var xhr = new XMLHttpRequest();
-//get_readings_prev_hours();
-var yLabel = "Temperature in C";
+function refreshGraph(){
+    
+    
+// select the element that will be replaced
+var el = document.querySelector('.brushingDiv');
+
+// <a href="/javascript/manipulation/creating-a-dom-element-51/">create a new element</a> that will take the place of "el"
+var newEl = document.createElement('div');
+newEl.className = "brushingDiv";
+newEl.innerHTML = '<svg width="800" height="500" class = "brushing" ></svg>';
+
+// replace el with newEL
+el.parentNode.replaceChild(newEl, el);
+    
+    //var elem = document.getElementById('brushing');
+    //elem.parentNode.removeChild(elem);
+
+var nodeId = document.getElementById("nodeId").value;
+var sensor = document.getElementById("sensor").value;
+    console.log("sensor:" +sensor);
+    
+    
+console.log("node Id1: "+nodeId);
+var dataTpye = "Temperature";
+var dataSource;
+
+if (nodeId == 1){
+    dataSource = "data1.csv";
+}
+
+if (nodeId == 2){
+    dataSource = "data2.csv";
+}
+    if (nodeId == 3){
+    dataSource = "data3.csv";
+}
 
 
-/* testing git push */
-var svg = d3.select(".brush"),
+    
+
+    
+
+  
+    
+   
+    console.log("node Id2: "+nodeId);
+    
+
+    console.log(dataSource);
+    
+
+// get the sensor type from select
+function selectVariable() {
+    datatype = document.getElementById("variable").value;
+    console.log("Value selected " + datatype);
+    if(datatype == "temperature") {
+        yLabel = "Temperature in C"
+    }
+    else {
+        yLabel = "";
+    }
+    //get_readings_prev_hours();
+    
+}
+
+
+
+
+var svg2 = d3.select(".brushing"),
     margin = {top: 20, right: 20, bottom: 110, left: 40},
     margin2 = {top: 430, right: 20, bottom: 30, left: 40},
-    width = +svg.attr("width") - margin.left - margin.right,
-    height = +svg.attr("height") - margin.top - margin.bottom,
-    height2 = +svg.attr("height") - margin2.top - margin2.bottom;
+    width = +svg2.attr("width") - margin.left - margin.right,
+    height = +svg2.attr("height") - margin.top - margin.bottom,
+    height2 = +svg2.attr("height") - margin2.top - margin2.bottom;
 
-var parseDate = d3.timeParse("%b %d %Y");
-//var parseDate = d3.timeFormat("%b %d, %Y");
+//var parseDate = d3.timeParse("%I %d %b %Y");
+var parseDate = d3.timeParse("%d %m %Y");
+
 
 var x = d3.scaleTime().range([0, width]),
     x2 = d3.scaleTime().range([0, width]),
@@ -50,55 +98,44 @@ var zoom = d3.zoom()
 
 var area = d3.area()
     .curve(d3.curveMonotoneX)
-    .x(function(d) { return x(parseDate(d.date)); })
+    .x(function(d) { return x(d.date); })
     .y0(height)
-    .y1(function(d) { return y(+d.value); });
+    .y1(function(d) { return y(d.price); });
 
 var area2 = d3.area()
     .curve(d3.curveMonotoneX)
-    .x(function(d) { return x2(parseDate(d.date)); })
+    .x(function(d) { return x2(d.date); })
     .y0(height2)
-    .y1(function(d) { return y2(+d.value); });
+    .y1(function(d) { return y2(d.price); });
 
-    var areaA = d3.area()
-    .curve(d3.curveMonotoneX)
-    .x(function(d) { return x(parseDate(d.date)); })
-    .y0(height)
-    .y1(function(d) { return y(+d.value); });
-
-var area2A = d3.area()
-    .curve(d3.curveMonotoneX)
-    .x(function(d) { return x2(parseDate(d.date)); })
-    .y0(height2)
-    .y1(function(d) { return y2(+d.value); });
-
-svg.append("defs").append("clipPath")
+svg2.append("defs").append("clipPath")
     .attr("id", "clip")
   .append("rect")
     .attr("width", width)
     .attr("height", height);
 
-var focus = svg.append("g")
+var focus = svg2.append("g")
     .attr("class", "focus")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var context = svg.append("g")
+var context = svg2.append("g")
     .attr("class", "context")
     .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
 
 
+console.log("node Id: "+nodeId);
 
-function plotGraph() {
-  console.log("New Data");
-  console.log(data);
-  
-  x.domain(d3.extent(data, function(d) { console.log(parseDate(d.date)); return parseDate(d.date); }));
-  y.domain([0, d3.max(data, function(d) { return +d.value; })]);
+    console.log(dataSource);
+    
+
+d3.csv(dataSource, type, function(error, data) {
+  if (error) throw error;
+
+  x.domain(d3.extent(data, function(d) { return d.date; }));
+  y.domain([0, d3.max(data, function(d) { return d.price; })]);
   x2.domain(x.domain());
   y2.domain(y.domain());
-
-
 
   focus.append("path")
       .datum(data)
@@ -109,26 +146,12 @@ function plotGraph() {
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis);
-  focus.append("text")             
-      .attr("transform",
-            "translate(" + (width/2) + " ," + 
-                           (height + margin.top + 15) + ")")
-      .style("text-anchor", "middle")
-      .text("Date");
-  
-    focus.append("g")
+
+  focus.append("g")
       .attr("class", "axis axis--y")
       .call(yAxis);
-    // text label for the y axis
-    focus.append("text")
-          .attr("transform", "rotate(-90)")
-          .attr("y", 0 - margin.left - 5 )
-          .attr("x",0 - (height / 2) )
-          .attr("dy", "1em")
-          .style("text-anchor", "middle")
-          .text(yLabel);        
-  
-    context.append("path")
+
+  context.append("path")
       .datum(data)
       .attr("class", "area")
       .attr("d", area2);
@@ -143,14 +166,17 @@ function plotGraph() {
       .call(brush)
       .call(brush.move, x.range());
 
-  svg.append("rect")
+  svg2.append("rect")
       .attr("class", "zoom")
       .attr("width", width)
       .attr("height", height)
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
       .call(zoom);
-}
+});
 
+
+
+//get data from URL
 function send_http_request() {
     console.log(URL);
     xhr.open("GET", URL);
@@ -193,6 +219,10 @@ function onrequestCompletion() {
     plotGraph();
 }
 
+// Get the node id from select
+
+/////////////////////////////////
+
 
 function brushed() {
   if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
@@ -200,7 +230,7 @@ function brushed() {
   x.domain(s.map(x2.invert, x2));
   focus.select(".area").attr("d", area);
   focus.select(".axis--x").call(xAxis);
-  svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
+  svg2.select(".zoom").call(zoom.transform, d3.zoomIdentity
       .scale(width / (s[1] - s[0]))
       .translate(-s[0], 0));
 }
@@ -213,58 +243,27 @@ function zoomed() {
   focus.select(".axis--x").call(xAxis);
   context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
 }
+//moisture,light,humidity,temperature,price
+function type(d) {
+  d.date = parseDate(d.date);
+  //d.price = +d.price;
 
-function buildTable() {
-    console.log(datatype);
-    hash_table = [];
-    for (var i=0; i<prevHoursData.readings.length; i++) {
-        if(datatype == "temperature") {
-            hash_table[prevHoursData.readings[i].date2] =  prevHoursData.readings[i].temperature;
-        } else if(datatype == "humidity") {
-            console.log("Humdity");
-            hash_table[prevHoursData.readings[i].date2] =  prevHoursData.readings[i].humidity;
-        } else if(datatype == "battery") {
-            hash_table[prevHoursData.readings[i].date2] =  prevHoursData.readings[i].battery;
-        } else if(datatype == "moisture") {
-            hash_table[prevHoursData.readings[i].date2] =  prevHoursData.readings[i].moisture;
-        } else if(datatype == "sunlight") {
-            hash_table[prevHoursData.readings[i].date2] =  prevHoursData.readings[i].sunlight;
-        } 
-    }
-    data_set.readings = [];
-    for(var key in hash_table ) {
-      if (hash_table.hasOwnProperty(key)) {
-        data_set.readings.push({
-          "date": key,
-          "value": hash_table[key]
-        });
-      } 
-  }
+    switch (sensor) {
+  case 'temperature':
+    d.price = +d.temperature;
+    break;
+  case 'humidity':
+         d.price = +d.humidity;
+    break;
+    case 'light':
+         d.price = +d.light;
+    break;
+  
+  default:
+    d.price = +d.moisture; 
 }
-
-function selectNodeId() {
-    nodeId = document.getElementById("nodeId").value;
-    get_readings_prev_hours();
+ 
     
+  return d;
 }
-
-
-function selectVariable() {
-    datatype = document.getElementById("variable").value;
-    console.log("Value selected " + datatype);
-    if(datatype == "temperature") {
-        yLabel = "Temperature in C"
-    }
-    else {
-        yLabel = "";
-    }
-    get_readings_prev_hours();
-    
-}
-/* set  duration */
-function setDuration(hours) {
-    prev_duration = duration;
-    duration = hours;
-    get_readings_prev_hours();
-    //return duration;
 }
