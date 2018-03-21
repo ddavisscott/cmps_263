@@ -1,3 +1,7 @@
+var ndeId = "node1"; 
+var sensor = "humidity";
+refreshGraph();
+
 function refreshGraph(){
     
     
@@ -15,8 +19,9 @@ el.parentNode.replaceChild(newEl, el);
     //var elem = document.getElementById('brushing');
     //elem.parentNode.removeChild(elem);
 var yLabel = "Temperature in C";
-var nodeId = document.getElementById("nodeId").value;
-var sensor = document.getElementById("sensor").value;
+    
+nodeId = document.getElementById("nodeId").value;
+sensor = document.getElementById("sensor").value;
     console.log("sensor:" +sensor);
     
     

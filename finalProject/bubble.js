@@ -60,7 +60,6 @@ var nodes_data =  [
     {"name": "Node_10", "type":"strong", "usage":51,  "Moisture": 94, "Light": 91, "Humidity": 69, "Temperature": 41},
     {"name": "Node_11", "type":"average", "usage":31, "Moisture": 84, "Light": 11, "Humidity": 62, "Temperature": 62},
     {"name": "Node_12", "type": "strong", "usage":31, "Moisture": 31, "Light": 73, "Humidity": 11, "Temperature": 78},
-    {"name": "Node_13", "type":"average", "usage":51, "Moisture": 44, "Light": 38, "Humidity": 54, "Temperature": 48},
     {"name": "Node_14", "type": "strong", "usage":21, "Moisture": 61, "Light": 58, "Humidity": 14, "Temperature": 77},
     {"name": "Node_15", "type":"strong", "usage":21,  "Moisture": 100, "Light": 81, "Humidity": 9, "Temperature": 70},
     {"name": "Node_16", "type": "strong", "usage":41,  "Moisture": 93, "Light": 71, "Humidity": 32, "Temperature": 64},
