@@ -40,6 +40,73 @@
 width: 700px;    
 }
 
+h3 {
+    text-align: center;
+}
+
+.legend{
+    width: 25%;
+    height: 50px;
+    float: left;
+
+}
+            .bubbleContainer {
+                width: 65%;
+                height: available;
+                min-height: 400px;
+                float: left;
+
+            }
+    .firstpane{
+        width: 25%;
+        height: available;
+        min-height: 400px;
+        float: left;
+        background-color:#f9f9f9;
+        border-collapse: collapse;
+    }
+            
+    .secondpane{
+       width: 25%;
+       height: available;
+       min-height: 400px;
+       float: left;
+       background-color:#f9f9f9;
+       border-collapse: collapse;
+    }
+
+    .thirdpane{
+       width: 25%;
+       height: available;
+       min-height: 400px;
+       float: left;
+       background-color:#f9f9f9;
+       border-collapse: collapse;
+    }
+    .fourthpane{
+       width: 25%;
+       height: available;
+       min-height: 400px;
+       float: left;
+       background-color:#f9f9f9;
+       border-collapse: collapse;
+    }
+            
+    .row1 {
+                width: available;
+                height: 40%;
+                float: left;
+            }
+    .row2 {
+                width: available;
+                height: 40%;
+                float: left;
+            }
+    .row3 {
+                width: available;
+                height: 20%;
+                float: left;
+            }
 
 rect.bordered {
         stroke: #E6E6E6;
