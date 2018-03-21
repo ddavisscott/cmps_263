@@ -30,13 +30,17 @@
     <div id="dataset-picker">
     </div>
     <script type="text/javascript">
+      var min = 10;
+     var max = 70;
       var margin = { top: 50, right: 0, bottom: 100, left: 30 },
           width = 960 - margin.left - margin.right,
           height = 430 - margin.top - margin.bottom,
           gridSize = Math.floor(width / 24),
           legendElementWidth = gridSize*2,
           buckets = 9,
-          colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"], // alternatively colorbrewer.YlGnBu[9]
+          //colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"], // alternatively 
+          colors = ["#ffffbf","#1a9641","#fdae61","#d7191c"];
+          //colorbrewer.YlGnBu[9]
            days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
           times = ["5a", "10a", "3p",  "8p","12p"];
           datasets = ["binary_node1_humidity.tsv", "binary_node1_temp.tsv", "binary_node1_moisture.tsv","binary_node1_light.tsv"
@@ -80,8 +84,12 @@
         },
         function(error, data) {
             console.log(data);
+            /*var colorScale = d3.scale.quantile()
+              .domain([0, buckets - 1, d3.max(data, function (d) { return d.value; })])
+              .range(colors);*/
             var colorScale = d3.scale.quantile()
               .domain([0, buckets - 1, d3.max(data, function (d) { return d.value; })])
+              .domain([min, max-10, max])
               .range(colors);
 
           var cards = svg.selectAll(".hour")
