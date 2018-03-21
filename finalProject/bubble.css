@@ -22,6 +22,7 @@ div.tooltip {
 svg {
   border:0px solid black;
 padding-top: 40px;
+padding-left: 20px;
 float:none
    
 }
