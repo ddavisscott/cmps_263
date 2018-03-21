@@ -14,7 +14,7 @@ el.parentNode.replaceChild(newEl, el);
     
     //var elem = document.getElementById('brushing');
     //elem.parentNode.removeChild(elem);
-
+var yLabel = "Temperature in C";
 var nodeId = document.getElementById("nodeId").value;
 var sensor = document.getElementById("sensor").value;
     console.log("sensor:" +sensor);
@@ -146,10 +146,23 @@ d3.csv(dataSource, type, function(error, data) {
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis);
-
+  focus.append("text")             
+      .attr("transform",
+            "translate(" + (width/2) + " ," + 
+                           (height + margin.top + 15) + ")")
+      .style("text-anchor", "middle")
+      .text("Timeline");
   focus.append("g")
       .attr("class", "axis axis--y")
       .call(yAxis);
+// text label for the y axis
+  focus.append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 0 - margin.left - 5 )
+          .attr("x",0 - (height / 2) )
+          .attr("dy", "1em")
+          .style("text-anchor", "middle")
+          .text(yLabel);
 
   context.append("path")
       .datum(data)
@@ -251,16 +264,20 @@ function type(d) {
     switch (sensor) {
   case 'temperature':
     d.price = +d.temperature;
+    yLabel = "Temperature  in F ";
     break;
   case 'humidity':
          d.price = +d.humidity;
+         yLabel = "Humidity";
     break;
     case 'light':
          d.price = +d.light;
+         yLabel = "Sunlight in lux";     
     break;
   
   default:
     d.price = +d.moisture; 
+    yLabel = "Moisture in m3.m-3";
 }
  
     
