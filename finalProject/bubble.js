@@ -204,8 +204,16 @@ var node = svg.append("g")
         .on("mouseover", function(d) {		
             div_tooltip.transition()		
                 .duration(200)		
-                .style("opacity", .9);		
-            div_tooltip	.html(d.name + "<br/>" )	
+                .style("opacity", .9);	
+            
+            //{"name": "Router", "type": "router", "usage":31, "Moisture": 91, "Light": 44, "Humidity": 32, "Temperature": 66},
+            div_tooltip	.html("<center>"+d.name + "</center><br/>" 
+                            +"<strong>Moisture: </strong>"+d.Moisture+ "<br/>" 
+                            +"<strong>Light: </strong>" +d.Light+ "<br/>" 
+                            +"<strong>Humidity: </strong>"+d.Humidity+ "<br/>"  
+                            +"<strong>Temperature: </strong>"+d.Temperature+ "<br/>" 
+                             
+                             )	
                 .style("left", (d3.event.pageX) + "px")		
                 .style("top", (d3.event.pageY - 28) + "px");	
             })	
