@@ -22,5 +22,13 @@ div.tooltip {
 svg {
   border:0px solid black;
 padding-top: 40px;
+float:none
    
+}
+.bubbleContainer{
+    float: left;
+}
+.legend{
+    float: right;
+    width: 20%;
 }
