@@ -1,41 +1,4 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
-<html>
-  <head>
-    <style>
-      rect.bordered {
-        stroke: #E6E6E6;
-        stroke-width:2px;   
-      }
-
-      text.mono {
-        font-size: 9pt;
-        font-family: Consolas, courier;
-        fill: #aaa;
-      }
-
-      text.axis-workweek {
-        fill: #000;
-      }
-
-      text.axis-worktime {
-        fill: #000;
-      }
-        
-        #chart{
-            height: 900px;
-        }
-        
-    </style>
-    <script src="d3mini.js"></script>
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-  </head>
-  <body>
-    <div id="chart"></div>
-    <div id="dataset-picker">
-    </div>
-    <script type="text/javascript">
-    var min = 10;
+var min = 10;
     var max = 70;
     var margin = { top: 50, right: 0, bottom: 100, left: 30 },
           width = 960 - margin.left - margin.right,
@@ -52,7 +15,7 @@
                      ,"binary_node2_humidity.tsv", "binary_node2_temp.tsv", "binary_node2_moisture.tsv","binary_node2_light.tsv"
                      ,"binary_node3_humidity.tsv", "binary_node3_temp.tsv", "binary_node3_moisture.tsv","binary_node3_light.tsv"];
 
-      var svg = d3.select("#chart").append("svg")
+      var svg = d3.select(".binary")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
           .append("g")
@@ -122,7 +85,7 @@
         });  
       };
 
-      //heatmapChart(datasets[0]);
+      heatmapChart(datasets[1]);
       
       var datasetpicker = d3.select("#dataset-picker").selectAll(".dataset-button")
         .data(datasets);
@@ -131,13 +94,7 @@
         .append("input")
         .attr("value", function(d){ return "Dataset " + d })
         .attr("type", "button")
-        .attr("class", "dataset-button")
+        .attr("id", "change")
         .on("click", function(d) {
           heatmapChart(d);
         });
-        
-        
-        
-    </script>
-  </body>
-</html>

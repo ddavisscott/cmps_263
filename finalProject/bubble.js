@@ -1,43 +1,11 @@
-var svg = d3.select("svg"),
-    width = +svg.attr("width"),
-    height = +svg.attr("height");
-    
 
-/*
+var svg = d3.select(".bubble"),
+    margin = {top: 20, right: 20, bottom: 110, left: 40},
+    margin2 = {top: 430, right: 20, bottom: 30, left: 40},
+    width = +svg.attr("width") - margin.left - margin.right,
+    height = +svg.attr("height") - margin.top - margin.bottom,
+    height2 = +svg.attr("height") - margin2.top - margin2.bottom;
 
-{"TimeStamp": 1517605200, "id": 1, "Moisture": 23, "Light": 97, "Humidity": 43, "Temperature": 46},
-	{"TimeStamp": 1517616000, "id": 1, "Moisture": 76, "Light": 67, "Humidity": 21, "Temperature": 42},
-	{"TimeStamp": 1517626800, "id": 1, "Moisture": 28, "Light": 96, "Humidity": 23, "Temperature": 57},
-	{"TimeStamp": 1517637600, "id": 1, "Moisture": 52, "Light": 54, "Humidity": 34, "Temperature": 49},
-	{"TimeStamp": 1517648400, "id": 1, "Moisture": 97, "Light": 57, "Humidity": 16, "Temperature": 72},
-	{"TimeStamp": 1517659200, "id": 1, "Moisture": 41, "Light": 97, "Humidity": 55, "Temperature": 77},
-	{"TimeStamp": 1517670000, "id": 1, "Moisture": 63, "Light": 74, "Humidity": 8, "Temperature": 42},
-	{"TimeStamp": 1517680800, "id": 1, "Moisture": 89, "Light": 17, "Humidity": 79, "Temperature": 40},
-	{"TimeStamp": 1517691600, "id": 1, "Moisture": 54, "Light": 62, "Humidity": 26, "Temperature": 55},
-	{"TimeStamp": 1517702400, "id": 1, "Moisture": 82, "Light": 80, "Humidity": 62, "Temperature": 58},
-	{"TimeStamp": 1517713200, "id": 1, "Moisture": 38, "Light": 8, "Humidity": 51, "Temperature": 64},
-	{"TimeStamp": 1517724000, "id": 1, "Moisture": 50, "Light": 57, "Humidity": 38, "Temperature": 56},
-	{"TimeStamp": 1517734800, "id": 1, "Moisture": 29, "Light": 11, "Humidity": 54, "Temperature": 49},
-	{"TimeStamp": 1517745600, "id": 1, "Moisture": 95, "Light": 75, "Humidity": 34, "Temperature": 70},
-	{"TimeStamp": 1517756400, "id": 1, "Moisture": 70, "Light": 53, "Humidity": 64, "Temperature": 73},
-	{"TimeStamp": 1517767200, "id": 1, "Moisture": 75, "Light": 100, "Humidity": 37, "Temperature": 74},
-	{"TimeStamp": 1517778000, "id": 1, "Moisture": 99, "Light": 11, "Humidity": 32, "Temperature": 66},
-	{"TimeStamp": 1517788800, "id": 1, "Moisture": 47, "Light": 85, "Humidity": 48, "Temperature": 66},
-	{"TimeStamp": 1517799600, "id": 1, "Moisture": 27, "Light": 49, "Humidity": 16, "Temperature": 74},
-	{"TimeStamp": 1517810400, "id": 1, "Moisture": 43, "Light": 23, "Humidity": 73, "Temperature": 40},
-	{"TimeStamp": 1517821200, "id": 1, "Moisture": 94, "Light": 91, "Humidity": 69, "Temperature": 41},
-	{"TimeStamp": 1517832000, "id": 1, "Moisture": 84, "Light": 11, "Humidity": 62, "Temperature": 62},
-	{"TimeStamp": 1517842800, "id": 1, "Moisture": 31, "Light": 73, "Humidity": 11, "Temperature": 78},
-	{"TimeStamp": 1517853600, "id": 1, "Moisture": 95, "Light": 29, "Humidity": 14, "Temperature": 67},
-	{"TimeStamp": 1517864400, "id": 1, "Moisture": 66, "Light": 76, "Humidity": 48, "Temperature": 50},
-	{"TimeStamp": 1517875200, "id": 1, "Moisture": 31, "Light": 24, "Humidity": 52, "Temperature": 46},
-	{"TimeStamp": 1517886000, "id": 1, "Moisture": 44, "Light": 38, "Humidity": 54, "Temperature": 48},
-	{"TimeStamp": 1517896800, "id": 1, "Moisture": 61, "Light": 58, "Humidity": 14, "Temperature": 77},
-	{"TimeStamp": 1517907600, "id": 1, "Moisture": 100, "Light": 81, "Humidity": 9, "Temperature": 70},
-	{"TimeStamp": 1517918400, "id": 1, "Moisture": 93, "Light": 71, "Humidity": 32, "Temperature": 64},
-	{"TimeStamp": 1517929200, "id": 1, "Moisture": 34, "Light": 11, "Humidity": 70, "Temperature": 67},
-
-*/
 
 
 

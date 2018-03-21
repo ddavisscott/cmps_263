@@ -60,8 +60,8 @@
     </div>
           
       
-      <div id = "row" class = "row2">
-          <div id = "col" class = "col1">
+      
+ <div id = "col" class = "col1">
               <h1>Historical Data <span class="badge badge-secondary"></span></h1>
               
               
@@ -74,7 +74,7 @@
         <option value="3">node 3</option>
     </select>
     
-      <select class ="form-control-m" id="sensor">
+      <select class ="form-control" id="sensor">
         <option value="temperature">Temperature</option>
         <option value="humidity">Humidity</option>
         <option value="light">Sunlight</option>
@@ -84,18 +84,24 @@
               
     </select>
         
-        <button type="button" class="btn btn-outline-secondary" onclick= "refreshGraph()">Submit</button>
+        <button type="button" class="btn btn-outline-secondary" id="change" onclick= "refreshGraph(), refreshBinary()">Submit</button>
       
   </div>  
          <div class = "brushingDiv">      
           <svg width="800" height="400" class = "brushing" ></svg>
-        </div>     
+        </div>    
+     
+     
+     <div class = "weekly">      
+          <svg width="800" height="800" class = "binary" ></svg>
+         <div id="dataset-picker">
+        </div>   
  </div> 
           
           
     
       
-</div>
+
 
       
       
@@ -112,7 +118,7 @@
       
    <script src="brush2.js"></script>
     <script src="bubble.js"></script>
-    
+    <script src="binary.js"></script>
     
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
