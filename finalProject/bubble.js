@@ -150,6 +150,12 @@ var link = svg.append("g")
     .attr("stroke-width", 4)
     .style("stroke", linkColour);        
 
+//Define Tooltip here
+    var tooltip = d3.select("body").append("div").attr("class", "toolTip");
+    var div_tooltip = d3.select("body").append("div")	
+    .attr("class", "tooltip")				
+    .style("opacity", 0);
+
 //draw circles for the nodes 
 var node = svg.append("g")
         .attr("class", "nodes") 
@@ -159,7 +165,21 @@ var node = svg.append("g")
         .append("circle")
         .attr("r", circleRadius)
         .attr("fill", circleColour)
-        .attr("background-image", "find_code.png");                
+        .attr("background-image", "find_code.png")
+        .on("mouseover", function(d) {		
+            div_tooltip.transition()		
+                .duration(200)		
+                .style("opacity", .9);		
+            div_tooltip	.html(d.name + "<br/>" )	
+                .style("left", (d3.event.pageX) + "px")		
+                .style("top", (d3.event.pageY - 28) + "px");	
+            })	
+        
+        .on("mouseout", function(d) {		
+            div.transition()		
+                .duration(500)		
+                .style("opacity", 0);	
+        });
       
 var drag_handler = d3.drag()
 	.on("start", drag_start)
