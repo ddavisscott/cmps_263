@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div style="background-color:silver; padding:30px">
+    
+    <p id = "fruit1"></p>
+    <p id = "fruit2"></p>
+    <p id = "fruit3"></p>
+    
+ </div> 
+
+
+    
+    
+     
+<script>
+    
+var fruits = [
+    {   
+        kind: "grape",
+        color: "red",
+        quantity: 12,
+        tasty: true
+    },
+    
+    {
+        kind: "kiwi",
+        color: "brown",
+        quantity:98,
+        tasty: true
+    },
+    
+    {
+        kind: "banana",
+        color: "yellow",
+        quantity:0,
+        tasty: true
+    }, 
+];  
+var text1="";    
+var text2=""; 
+var text3="";     
+for (var i = 0; i < fruits.length; i++) {
+    if(i==0){
+    document.getElementById("fruit1").style.color = "red";
+    text1 = fruits[i].quantity + " " +fruits[i].kind + "<br>"     
+    document.getElementById("fruit1").innerHTML = text1;  //Prints value to console
+
+    }
+    if(i==1){
+    document.getElementById("fruit2").style.color = "brown";
+    text2 = fruits[i].quantity + " " + fruits[i].kind + "<br>" 
+    document.getElementById("fruit2").innerHTML = text2;  //Prints value to console
+
+    }
+    
+    if(i==2){
+    document.getElementById("fruit3").style.color = "yellow";
+    text3 = fruits[i].quantity + " " + fruits[i].kind + "<br>" 
+    document.getElementById("fruit3").innerHTML = text3;  //Prints value to console
+
+    }    
+    
+    
+}
+    
+
+
+
+    
+
+        
+</script>
+
+</body>
+</html>

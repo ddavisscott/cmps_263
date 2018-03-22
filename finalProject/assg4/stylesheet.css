@@ -1,0 +1,39 @@
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+    #chart{
+        margin:0 auto;
+        width: 960px;
+    }
+    #title{
+        font-size: 15px;
+        margin-top: 40px;
+    }
+    #info {
+      margin-left: 100px;
+        width: 960px;
+        font-size: 15px;
+        
+    }
+     .tick line{
+    opacity: 0.2;
+  }
+
+
+
+
