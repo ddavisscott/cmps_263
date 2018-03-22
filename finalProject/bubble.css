@@ -21,16 +21,8 @@ div.tooltip {
   stroke-width: 0px;
   color: red;
 }
-svg {
-  border:0px solid black;
-padding-top: 40px;
-padding-left: 20px;
-float:none
-   
-}
-.bubbleContainer{
-    float: left;
-}
+
+
 .legend{
     float: right;
     width: 20%;

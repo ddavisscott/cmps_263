@@ -11,7 +11,10 @@ var min = 10;
           //colorbrewer.YlGnBu[9]
            days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
           times = ["5a", "10a", "3p",  "8p","12p"];
-          datasets = ["binary_node1_humidity.tsv", "binary_node1_temp.tsv", "binary_node1_moisture.tsv","binary_node1_light.tsv"
+          
+
+
+            datasets = ["binary_node1_humidity.tsv", "binary_node1_temp.tsv", "binary_node1_moisture.tsv","binary_node1_light.tsv"
                      ,"binary_node2_humidity.tsv", "binary_node2_temp.tsv", "binary_node2_moisture.tsv","binary_node2_light.tsv"
                      ,"binary_node3_humidity.tsv", "binary_node3_temp.tsv", "binary_node3_moisture.tsv","binary_node3_light.tsv"];
 
@@ -90,11 +93,13 @@ var min = 10;
       var datasetpicker = d3.select("#dataset-picker").selectAll(".dataset-button")
         .data(datasets);
 
-      datasetpicker.enter()
+datasetpicker.enter()
         .append("input")
         .attr("value", function(d){ return "Dataset " + d })
         .attr("type", "button")
-        .attr("id", "change")
+        .attr("class", "dataset-button")
         .on("click", function(d) {
           heatmapChart(d);
         });
+
+   

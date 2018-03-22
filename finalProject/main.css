@@ -1,26 +1,21 @@
+
 #row {
     margin: auto;
     width: 90%;
     padding: 50px;
 }
 
-.brushing{
-    height:500px;
-    width: 960px;
+.row1{
+    margin-left: 20px;
 }
 
-.col1 {
-    margin: auto;
-    width: 40%;
-    padding: 50px;
+#brushing{
+    height:500px;
+    width: 850px;
     float: left;
 }
-.col2 {
-    margin: auto;
-    width: 40%;
-    padding: 5%;
-    float: right;
-}
+
+
 
 .form-control{
     width: 20%;
@@ -32,13 +27,8 @@
     width: %40;
 }
 
-.nodes{
-    height: 500px;
-}
 
-#chart{
-width: 700px;    
-}
+
 
 h3 {
     text-align: center;
@@ -50,23 +40,33 @@ h3 {
     float: left;
 
 }
-            .bubbleContainer {
-                width: 65%;
-                height: available;
-                min-height: 400px;
-                float: left;
 
-            }
-    .firstpane{
-        width: 25%;
-        height: available;
-        min-height: 400px;
-        float: left;
-        background-color:#f9f9f9;
-        border-collapse: collapse;
-    }
+.brushingDiv{
+    float: left;
+}
+
+.weekly{
+    float: right;
+}
+
+
+.bubble{
+    float: left;
+    padding: 20px;
+    
+}
+  
             
     .secondpane{
+       width: 25%;
+       height: available;
+       min-height: 400px;
+       float: left;
+       background-color: #f9f9f9;
+       border-collapse: collapse;
+    }
+
+ .firstpane{
        width: 25%;
        height: available;
        min-height: 400px;
@@ -75,6 +75,7 @@ h3 {
        border-collapse: collapse;
     }
 
+   
     .thirdpane{
        width: 25%;
        height: available;
@@ -93,7 +94,7 @@ h3 {
     }
             
     .row1 {
-                width: available;
+                width: 100%;
                 height: 40%;
                 float: left;
             }
@@ -126,3 +127,12 @@ rect.bordered {
       text.axis-worktime {
         fill: #000;
       }
+
+
+
+
+.legend{
+    float: right;
+    width: 20%
+}
+   
